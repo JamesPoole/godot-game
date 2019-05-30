@@ -8,7 +8,7 @@ var current_dialog_pos = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	chapter_one_content = load_narrative(CHAPTER_ONE)
-	enter_dialog(chapter_one_content, 'Doctor')
+	#enter_dialog(chapter_one_content, 'Doctor')
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -29,7 +29,6 @@ func load_narrative(jsonFile):
 func enter_dialog(dialog_file, dialog_tag):
 	in_dialog = true
 	current_dialog = dialog_tag
-	
 	var dialog_section = dialog_file.root[2][dialog_tag]
 	
 	#find the position where the dialog starts (denoted by a ^ symbol)
@@ -40,7 +39,6 @@ func enter_dialog(dialog_file, dialog_tag):
 			break
 		pos = pos+1
 
-	print(dialog_section[pos])
 	current_dialog = dialog_section
 
 func display_next_entry():
