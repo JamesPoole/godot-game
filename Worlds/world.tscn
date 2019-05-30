@@ -4,3 +4,6 @@
 
 [node name="world" instance=ExtResource( 1 )]
 
+[node name="ground" parent="." index="0"]
+editor/display_folded = false
+
