@@ -13,11 +13,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (in_dialog == true):
-		if (Input.is_action_just_pressed("ui_accept")):
+		if (Input.is_action_just_pressed("interact")):
 			display_next_entry()
-	if (in_dialog == false):
-		if (Input.is_action_just_pressed("ui_right")):
-			enter_dialog(chapter_one_content, 'WiseMan')
 
 func load_narrative(jsonFile):
 	var file = File.new()
@@ -26,7 +23,8 @@ func load_narrative(jsonFile):
 	file.close()
 	return json_content.result
 	
-func enter_dialog(dialog_file, dialog_tag):
+func enter_dialog(dialog_tag):
+	var dialog_file = chapter_one_content
 	in_dialog = true
 	current_dialog = dialog_tag
 	var dialog_section = dialog_file.root[2][dialog_tag]

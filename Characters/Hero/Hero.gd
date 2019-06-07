@@ -1,6 +1,7 @@
 extends "res://Characters/Character.gd"
 
 var can_interact = false
+var interactable_name = null
 
 func _ready():
 	var hero = get_node(".")
@@ -26,18 +27,24 @@ func _physics_process(delta):
 	if is_on_floor():
 		if Input.is_action_just_pressed("ui_up"):
 			motion.y = JUMP_HEIGHT
-	
-	#interaction
+
 	if can_interact == true:
+		interaction()
+
+func interaction():
 		if Input.is_action_just_pressed("interact"):
-			print('hi')
+			get_node("Scripts/dialog_parser").enter_dialog('Doctor')
+			print('hi ' + interactable_name)
 
 #on colliding with another interactable, allow interactions
 func _on_Area2D_area_entered(area):
-	if (area.get_parent().get_name() != "Hero"):
+	var scene_name = area.get_parent().get_name()
+	if (scene_name != "Hero"):
+		interactable_name = scene_name
 		can_interact = true
 
 #on leaving another interactable, disallow interactions
 func _on_Area2D_area_exited(area):
 	if (area.get_parent().get_name() != "Hero"):
 		can_interact = false
+		interactable_name = null
