@@ -26,12 +26,15 @@ func _physics_process(delta):
 	#basic movement
 	if can_move:
 		if Input.is_action_pressed("ui_right"):
+			$AnimatedSprite.play('running')
 			motion.x += ACCEL
 			motion.x = min(motion.x, MAX_SPEED)
 		elif Input.is_action_pressed("ui_left"):
+			$AnimatedSprite.play('running')
 			motion.x -= ACCEL
 			motion.x = max(motion.x, -MAX_SPEED)
 		else:
+			$AnimatedSprite.play('standing')
 			motion.x = lerp(motion.x, 0, 0.2)
 		if is_on_floor():
 			if Input.is_action_just_pressed("ui_up"):
@@ -47,7 +50,7 @@ func interaction():
 		if Input.is_action_just_pressed("interact"):
 			#if we are not already talking, start dialog
 			if (in_dialog == false):
-				enter_dialog('Doctor')
+				enter_dialog(interactable_name)
 			#if we are already talking, continue the dialog
 			elif (in_dialog == true):
 				display_dialog_entry(current_dialog_pos+2)
@@ -79,15 +82,13 @@ func enter_dialog(dialog_tag):
 	display_dialog_entry(0)
 
 func display_dialog_entry(position):
-	#check the next pos to see if it is finished
-	var next_pos = position+2
-	
 	#check if next position is available
 	if current_dialog[position][0] == "^":
 		current_dialog_pos = position
 		print(current_dialog[position])
 	#if done, reset all globals
-	if current_dialog[next_pos] == "done":
+	if current_dialog[position] == "done":
+		print('----clear to go-----')
 		current_dialog = null
 		current_dialog_pos = 0
 		in_dialog = false
