@@ -8,6 +8,7 @@ var current_dialog_pos = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	chapter_one_content = load_narrative(CHAPTER_ONE)
+	print('here yay')
 	#enter_dialog(chapter_one_content, 'Doctor')
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

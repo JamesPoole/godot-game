@@ -1,9 +1,17 @@
 extends "res://Characters/Character.gd"
+const CHAPTER_ONE = "res://Narrative/ChapterOne.json"
 
 var can_interact = false
+var can_move = true
 var interactable_name = null
 
+var in_dialog = false
+var current_dialog = null
+var current_dialog_pos = 0
+var current_content = null
+
 func _ready():
+	current_content = load_narrative(CHAPTER_ONE)
 	var hero = get_node(".")
 	var interactables = get_tree().get_nodes_in_group("Interactable")
 	for i in range(interactables.size()):
@@ -16,25 +24,74 @@ func _ready():
 #warning-ignore:unused_argument
 func _physics_process(delta):
 	#basic movement
-	if Input.is_action_pressed("ui_right"):
-		motion.x += ACCEL
-		motion.x = min(motion.x, MAX_SPEED)
-	elif Input.is_action_pressed("ui_left"):
-		motion.x -= ACCEL
-		motion.x = max(motion.x, -MAX_SPEED)
-	else:
-		motion.x = lerp(motion.x, 0, 0.2)
-	if is_on_floor():
-		if Input.is_action_just_pressed("ui_up"):
-			motion.y = JUMP_HEIGHT
-
+	if can_move:
+		if Input.is_action_pressed("ui_right"):
+			motion.x += ACCEL
+			motion.x = min(motion.x, MAX_SPEED)
+		elif Input.is_action_pressed("ui_left"):
+			motion.x -= ACCEL
+			motion.x = max(motion.x, -MAX_SPEED)
+		else:
+			motion.x = lerp(motion.x, 0, 0.2)
+		if is_on_floor():
+			if Input.is_action_just_pressed("ui_up"):
+				motion.y = JUMP_HEIGHT
+	elif !can_move:
+		motion.x = 0
+		motion.y = 0
+		
 	if can_interact == true:
 		interaction()
 
 func interaction():
 		if Input.is_action_just_pressed("interact"):
-			get_node("Scripts/dialog_parser").enter_dialog('Doctor')
-			print('hi ' + interactable_name)
+			#if we are not already talking, start dialog
+			if (in_dialog == false):
+				enter_dialog('Doctor')
+			#if we are already talking, continue the dialog
+			elif (in_dialog == true):
+				display_dialog_entry(current_dialog_pos+2)
+			
+func load_narrative(jsonFile):
+	var file = File.new()
+	file.open(jsonFile, File.READ)
+	var json_content = JSON.parse(file.get_as_text())	
+	file.close()
+	return json_content.result
+	
+func enter_dialog(dialog_tag):
+	var dialog_file = current_content
+	in_dialog = true
+	can_move = false
+	current_dialog = dialog_tag
+	var dialog_section = dialog_file.root[2][dialog_tag]
+	
+	#find the position where the dialog starts (denoted by a ^ symbol)
+	var pos = 0
+	for item in dialog_section:
+		if str(item)[0] == "^":
+			current_dialog_pos = pos
+			break
+		pos = pos+1
+
+	current_dialog = dialog_section
+	#show first dialog entry
+	display_dialog_entry(0)
+
+func display_dialog_entry(position):
+	#check the next pos to see if it is finished
+	var next_pos = position+2
+	
+	#check if next position is available
+	if current_dialog[position][0] == "^":
+		current_dialog_pos = position
+		print(current_dialog[position])
+	#if done, reset all globals
+	if current_dialog[next_pos] == "done":
+		current_dialog = null
+		current_dialog_pos = 0
+		in_dialog = false
+		can_move = true
 
 #on colliding with another interactable, allow interactions
 func _on_Area2D_area_entered(area):
