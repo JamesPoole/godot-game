@@ -47,13 +47,13 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[node name="Hero" index="0" instance=ExtResource( 1 )]
+[node name="Hero" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" parent="." index="0"]
 frames = SubResource( 1 )
 animation = "running"
-frame = 19
+frame = 13
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="." index="3"]

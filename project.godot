@@ -19,6 +19,12 @@ config/name="project"
 run/main_scene="res://game.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/size/borderless=true
+
 [editor_plugins]
 
 enabled=PoolStringArray( "vnen.tiled_importer" )
