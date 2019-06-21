@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/fonts/dialog_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/UI/Buttons/a-button.png" type="Texture" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.545098, 0.67451, 0.0588235, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.0588235, 0.219608, 0.0588235, 1 )
+
+[node name="DialogueBox" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Portrait" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="Portrait"]
+margin_left = 120.0
+margin_top = 529.74
+margin_right = 1158.96
+margin_bottom = 649.74
+custom_styles/panel = SubResource( 1 )
+
+[node name="Columns" type="HBoxContainer" parent="Portrait/Panel"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Name" type="RichTextLabel" parent="Portrait/Panel/Columns"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 200.0
+margin_bottom = 100.0
+custom_fonts/normal_font = ExtResource( 1 )
+custom_colors/default_color = Color( 0.0588235, 0.219608, 0.0588235, 1 )
+text = "Doctor"
+scroll_active = false
+
+[node name="Dialogue" type="RichTextLabel" parent="Portrait/Panel/Columns"]
+margin_left = 220.0
+margin_top = 10.0
+margin_right = 800.0
+margin_bottom = 100.0
+custom_fonts/normal_font = ExtResource( 1 )
+custom_colors/default_color = Color( 0.0588235, 0.219608, 0.0588235, 1 )
+text = "Dialog Text Goes Here"
+scroll_active = false
+
+[node name="Next" type="TextureButton" parent="Portrait/Panel/Columns"]
+margin_left = 870.0
+margin_top = 20.0
+margin_right = 950.0
+margin_bottom = 100.0
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+
+[node name="DialoguePlayer" type="Node" parent="."]
+
