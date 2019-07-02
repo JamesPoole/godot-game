@@ -10,7 +10,10 @@ var current_dialog = null
 var current_dialog_pos = 0
 var current_content = null
 
+onready var dialogue_box = get_node("DialogueBoxContainer/DialogueBox")
+
 func _ready():
+	print(dialogue_box)
 	current_content = load_narrative(CHAPTER_ONE)
 	var hero = get_node(".")
 	var interactables = get_tree().get_nodes_in_group("Interactable")
@@ -63,6 +66,7 @@ func load_narrative(jsonFile):
 	return json_content.result
 	
 func enter_dialog(dialog_tag):
+	dialogue_box.set_visible(true)
 	var dialog_file = current_content
 	in_dialog = true
 	can_move = false
@@ -89,6 +93,7 @@ func display_dialog_entry(position):
 	#if done, reset all globals
 	if current_dialog[position] == "done":
 		print('----clear to go-----')
+		dialogue_box.set_visible(false)
 		current_dialog = null
 		current_dialog_pos = 0
 		in_dialog = false

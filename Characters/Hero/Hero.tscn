@@ -64,4 +64,5 @@ smoothing_enabled = true
 [node name="DialogueBoxContainer" type="CanvasLayer" parent="." index="4"]
 
 [node name="DialogueBox" parent="DialogueBoxContainer" index="0" instance=ExtResource( 34 )]
+visible = false
 
