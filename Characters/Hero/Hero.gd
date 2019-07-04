@@ -1,6 +1,8 @@
 extends "res://Characters/Character.gd"
 const CHAPTER_ONE = "res://Narrative/ChapterOne.json"
 
+signal new_dialogue
+
 var can_interact = false
 var can_move = true
 var interactable_name = null
@@ -13,7 +15,6 @@ var current_content = null
 onready var dialogue_box = get_node("DialogueBoxContainer/DialogueBox")
 
 func _ready():
-	print(dialogue_box)
 	current_content = load_narrative(CHAPTER_ONE)
 	var hero = get_node(".")
 	var interactables = get_tree().get_nodes_in_group("Interactable")
@@ -65,6 +66,19 @@ func load_narrative(jsonFile):
 	file.close()
 	return json_content.result
 	
+"""
+takes a dialog line and parses the character name and body text
+
+args - dialogue_line = raw text from the json file
+returns - line_separated = array of information
+"""
+func parse_dialogue_line(dialogue_line):
+	var name = ""
+	var text = ""
+	var line_substring = dialogue_line.right(1)
+	var line_separated = line_substring.split("-")
+	return (line_separated)
+
 func enter_dialog(dialog_tag):
 	dialogue_box.set_visible(true)
 	var dialog_file = current_content
@@ -90,6 +104,9 @@ func display_dialog_entry(position):
 	if current_dialog[position][0] == "^":
 		current_dialog_pos = position
 		print(current_dialog[position])
+		#parsed_dialog[0] == name , parsed_dialog[1] == text
+		var parsed_dialog = parse_dialogue_line(current_dialog[position])
+		emit_signal("new_dialogue", parsed_dialog[0], parsed_dialog[1])
 	#if done, reset all globals
 	if current_dialog[position] == "done":
 		print('----clear to go-----')

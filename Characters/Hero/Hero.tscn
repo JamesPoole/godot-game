@@ -66,3 +66,4 @@ smoothing_enabled = true
 [node name="DialogueBox" parent="DialogueBoxContainer" index="0" instance=ExtResource( 34 )]
 visible = false
 
+[connection signal="new_dialogue" from="." to="DialogueBoxContainer/DialogueBox" method="_on_hero_new_dialogue"]
