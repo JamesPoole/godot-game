@@ -1,7 +1,9 @@
 extends Control
 
+onready var start_button : = get_node("Panel/Rows/A_Button") as TextureButton
+
 func _ready():
-	pass
+	start_button.grab_focus()
 
 func start_game():
 	get_tree().change_scene('res://game.tscn')

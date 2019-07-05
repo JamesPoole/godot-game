@@ -25,6 +25,9 @@ func _ready():
 		area2DNode.connect("body_enter", hero, "_on_Area2D_body_enter", args)
 		area2DNode.connect("body_exit", hero, "_on_Area2D_body_exit", args)
 
+	#signal to indicate dialog typing has finished
+	dialogue_box.connect("dialog_ended", hero, "_on_dialog_ended")
+
 #warning-ignore:unused_argument
 func _physics_process(delta):
 	#basic movement
@@ -55,9 +58,11 @@ func interaction():
 			#if we are not already talking, start dialog
 			if (in_dialog == false):
 				enter_dialog(interactable_name)
+				can_interact = false
 			#if we are already talking, continue the dialog
 			elif (in_dialog == true):
 				display_dialog_entry(current_dialog_pos+2)
+				can_interact = false
 			
 func load_narrative(jsonFile):
 	var file = File.new()
@@ -128,3 +133,7 @@ func _on_Area2D_area_exited(area):
 	if (area.get_parent().get_name() != "Hero"):
 		can_interact = false
 		interactable_name = null
+
+#enable interaction after the dialog has finished typing
+func _on_dialog_ended():
+	can_interact = true
