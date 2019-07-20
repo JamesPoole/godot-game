@@ -20,3 +20,7 @@ position = Vector2( -10.9658, -227.79 )
 [node name="LovedOne" parent="." instance=ExtResource( 5 )]
 position = Vector2( -190.334, -230.987 )
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+

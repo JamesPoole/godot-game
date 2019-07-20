@@ -44,4 +44,5 @@ size_flags_stretch_ratio = 0.5
 texture_normal = ExtResource( 3 )
 expand = true
 stretch_mode = 4
+
 [connection signal="button_up" from="Panel/Rows/A_Button" to="." method="_on_A_Button_button_up"]

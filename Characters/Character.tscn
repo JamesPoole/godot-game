@@ -67,5 +67,6 @@ one_way_collision = true
 position = Vector2( 0, 2.55773 )
 shape = SubResource( 3 )
 one_way_collision = true
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]

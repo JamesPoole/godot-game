@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Characters/Narrator/Narrator.gd" type="Script" id=1]
+[ext_resource path="res://hero-standing.png" type="Texture" id=2]
+[ext_resource path="res://UI/NarratorDialog.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/NarratorDialog.gd" type="Script" id=4]
+
+[sub_resource type="RayShape2D" id=1]
+
+[node name="Narrator" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.3, 0.3 )
+
+[node name="DialogueBoxContainer" type="CanvasLayer" parent="."]
+
+[node name="NarratorDialogueBox" parent="DialogueBoxContainer" instance=ExtResource( 3 )]
+visible = false
+script = ExtResource( 4 )
+
+[connection signal="new_dialogue" from="." to="DialogueBoxContainer/NarratorDialogueBox" method="_on_narrator_new_dialogue"]
