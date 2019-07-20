@@ -4,6 +4,7 @@ signal dialog_ended
 
 onready var text_name : = get_node("Panel/Columns/Name") as RichTextLabel
 onready var text_body : = get_node("Panel/Columns/Dialogue") as RichTextLabel
+onready var a_button : = get_node("Panel/Columns/Next") as TextureButton
 onready var timer = get_node("TypingTimer")
 
 var loaded_text = ""

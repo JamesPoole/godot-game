@@ -28,7 +28,7 @@ func _ready():
 	can_interact = false
 	
 func _physics_process(delta):
-	if in_dialog == true:
+	if in_dialog == true and can_interact == true:
 		if Input.is_action_just_pressed("interact"):
 			display_dialog_entry(current_dialog_pos+2)
 			can_interact = false
@@ -85,6 +85,7 @@ func display_dialog_entry(position):
 		dialogue_box.set_visible(false)
 		current_dialog = null
 		current_dialog_pos = 0
+		in_dialog = false
 		
 #enable interaction after the dialog has finished typing
 func _on_dialog_ended():
